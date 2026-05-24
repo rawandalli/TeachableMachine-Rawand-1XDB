@@ -149,3 +149,63 @@ async function tmLoop() {
 function setStatus(msg) {
   if (elTmStatus) elTmStatus.textContent = msg;
 }
+
+function startGame() {
+  playerScore = 0;
+  aiScore     = 0;
+  timeLeft    = GAME_SECONDS;
+  playerY     = CH / 2 - PADDLE_H / 2;
+  aiY         = CH / 2 - PADDLE_H / 2;
+
+  updateHUD();
+  resetBall(true);
+  showScreen('game-screen');
+
+  gameRunning = true;
+
+  clearInterval(timerID);
+  timerID = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) endGame();
+  }, 1000);
+
+  cancelAnimationFrame(rafID);
+  gameLoop();
+}
+
+function stopGame() {
+  gameRunning = false;
+  clearInterval(timerID);
+  cancelAnimationFrame(rafID);
+}
+
+function endGame() {
+  stopGame();
+
+  if (playerScore > bestScore) {
+    bestScore = playerScore;
+    localStorage.setItem('pong_best', bestScore);
+  }
+
+  saveEntry(playerScore, aiScore);
+  renderScoreboard();
+
+  document.getElementById('final-player-score').textContent = pad(playerScore);
+  document.getElementById('final-ai-score').textContent     = pad(aiScore);
+  document.getElementById('end-best-score').textContent     = bestScore;
+
+  const title = document.getElementById('result-title');
+  if (playerScore > aiScore) {
+    title.textContent = 'GEWONNEN!';
+    title.className   = 'result-title won';
+  } else if (playerScore < aiScore) {
+    title.textContent = 'VERLOREN!';
+    title.className   = 'result-title lost';
+  } else {
+    title.textContent = 'GELIJKSPEL!';
+    title.className   = 'result-title draw';
+  }
+
+  showScreen('end-screen');
+}
