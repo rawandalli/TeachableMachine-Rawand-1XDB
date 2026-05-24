@@ -449,3 +449,11 @@ function renderScoreboard() {
   html += '</tbody></table>';
   container.innerHTML = html;
 }
+
+// ════════════════════════════════════════
+//  HULPFUNCTIES
+// ════════════════════════════════════════
+function pad(n)            { return String(n).padStart(2, '0'); }
+function clamp(v, lo, hi)  { return Math.max(lo, Math.min(hi, v)); }
+function rand(lo, hi)      { return lo + Math.random() * (hi - lo); }
+function mag(vx, vy)       { return Math.sqrt(vx * vx + vy * vy); }
