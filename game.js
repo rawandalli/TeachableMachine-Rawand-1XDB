@@ -312,3 +312,68 @@ function updateBall() {
     resetBall(true);
   }
 }
+
+function draw() {
+  // Achtergrond
+  ctx.fillStyle = '#111827';
+  ctx.fillRect(0, 0, CW, CH);
+
+  // Subtiele gloed links/rechts
+  const glowL = ctx.createRadialGradient(PLAYER_X + PADDLE_W, playerY + PADDLE_H / 2, 0, PLAYER_X + PADDLE_W, playerY + PADDLE_H / 2, 120);
+  glowL.addColorStop(0,   'rgba(255,85,0,0.08)');
+  glowL.addColorStop(1,   'rgba(255,85,0,0)');
+  ctx.fillStyle = glowL;
+  ctx.fillRect(0, 0, CW / 2, CH);
+
+  // Stippellijn midden
+  ctx.setLineDash([14, 14]);
+  ctx.strokeStyle = 'rgba(99,120,150,0.35)';
+  ctx.lineWidth   = 2;
+  ctx.beginPath();
+  ctx.moveTo(CW / 2, 0);
+  ctx.lineTo(CW / 2, CH);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Speler-paddle (oranje)
+  drawPaddle(PLAYER_X, playerY, '#FF5500', '#FF7830');
+
+  // AI-paddle (geel)
+  drawPaddle(AI_X, aiY, '#FFCC00', '#FFE566');
+
+  // Bal (wit + gloed)
+  ctx.shadowColor = 'rgba(255,255,255,0.9)';
+  ctx.shadowBlur  = 18;
+  ctx.fillStyle   = '#FFFFFF';
+  ctx.beginPath();
+  ctx.arc(ballX, ballY, BALL_R, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+function drawPaddle(x, y, colorA, colorB) {
+  const grad = ctx.createLinearGradient(x, y, x + PADDLE_W, y);
+  grad.addColorStop(0, colorA);
+  grad.addColorStop(1, colorB);
+  ctx.fillStyle  = grad;
+  ctx.shadowColor = colorA;
+  ctx.shadowBlur  = 14;
+  roundRect(ctx, x, y, PADDLE_W, PADDLE_H, 5);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+function roundRect(c, x, y, w, h, r) {
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.lineTo(x + w - r, y);
+  c.quadraticCurveTo(x + w, y,     x + w, y + r);
+  c.lineTo(x + w, y + h - r);
+  c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  c.lineTo(x + r, y + h);
+  c.quadraticCurveTo(x, y + h,     x, y + h - r);
+  c.lineTo(x, y + r);
+  c.quadraticCurveTo(x, y,         x + r, y);
+  c.closePath();
+}
+
