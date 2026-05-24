@@ -41,3 +41,41 @@ const WEBCAM_SIZE = 200;
 
 let elTimer, elPlayerScore, elAiScore, elBestHud, elTmStatus, elControlBadge;
 
+window.addEventListener('DOMContentLoaded', () => {
+  canvas         = document.getElementById('game-canvas');
+  ctx            = canvas.getContext('2d');
+  elTimer        = document.getElementById('timer-badge');
+  elPlayerScore  = document.getElementById('player-score');
+  elAiScore      = document.getElementById('ai-score');
+  elBestHud      = document.getElementById('best-score-hud');
+  elTmStatus     = document.getElementById('tm-status');
+  elControlBadge = document.getElementById('control-badge');
+
+  bestScore = parseInt(localStorage.getItem('pong_best') || '0');
+  elBestHud.textContent = bestScore;
+
+  document.getElementById('start-btn').addEventListener('click', startGame);
+  document.getElementById('retry-btn').addEventListener('click', startGame);
+  document.getElementById('menu-btn').addEventListener('click', goMenu);
+
+  canvas.addEventListener('mousemove', e => {
+    const r  = canvas.getBoundingClientRect();
+    const sy = CH / r.height;
+    mouseY = (e.clientY - r.top) * sy;
+  });
+
+  renderScoreboard();
+  loadTMModel();
+});
+
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goMenu() {
+  stopGame();
+  renderScoreboard();
+  showScreen('start-screen');
+}
