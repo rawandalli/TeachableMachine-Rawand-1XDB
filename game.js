@@ -79,3 +79,73 @@ function goMenu() {
   renderScoreboard();
   showScreen('start-screen');
 }
+
+async function loadTMModel() {
+  setStatus('Model laden…');
+  try {
+    tmModel = await tmPose.load(MODEL_URL + 'model.json', MODEL_URL + 'metadata.json');
+
+    console.log('TM model geladen — positie-tracking actief.');
+
+    setStatus('Camera starten…');
+    await startWebcam();
+    tmLoaded = true;
+    usingTM  = true;
+    setStatus('Actief — hand tracking aan');
+    elControlBadge.textContent = '● Hand Tracking';
+    elControlBadge.className   = 'control-badge tm';
+  } catch (err) {
+    console.warn('TM laden mislukt:', err);
+    setStatus('TM niet beschikbaar — muisbediening actief');
+    usingTM = false;
+  }
+}
+
+async function startWebcam() {
+  tmWebcam = new tmPose.Webcam(200, 200, true);
+  await tmWebcam.setup();
+  await tmWebcam.play();
+
+  // Voeg de canvas van de webcam toe aan de overlay
+  const container   = document.getElementById('webcam-container');
+  const placeholder = document.getElementById('cam-placeholder');
+  placeholder.style.display = 'none';
+  container.appendChild(tmWebcam.canvas);
+
+  requestAnimationFrame(tmLoop);
+}
+
+async function tmLoop() {
+  if (!tmModel || !tmWebcam) return;
+  tmWebcam.update();
+
+  try {
+    const { pose } = await tmModel.estimatePose(tmWebcam.canvas);
+
+    if (pose && pose.keypoints) {
+      // Keypoint 9 = leftWrist, 10 = rightWrist (PoseNet indices)
+      const lw = pose.keypoints[9];
+      const rw = pose.keypoints[10];
+
+      // Gebruik de pols met de hoogste detectie-score
+      const wrist = (lw.score >= rw.score) ? lw : rw;
+
+      if (wrist.score > 0.2) {
+        // Map pols-Y (0–200) lineair naar canvas-Y (0–500)
+        tmHandY = (wrist.position.y / WEBCAM_SIZE) * CH;
+        setStatus(`Hand Y: ${Math.round(wrist.position.y)} → canvas: ${Math.round(tmHandY)}`);
+      } else {
+        // Hand niet zichtbaar: bevriesd op laatste positie
+        setStatus('Hand niet gevonden — houdt voor camera');
+      }
+    }
+  } catch (err) {
+    console.warn('tmLoop fout:', err);
+  }
+
+  requestAnimationFrame(tmLoop);
+}
+
+function setStatus(msg) {
+  if (elTmStatus) elTmStatus.textContent = msg;
+}
