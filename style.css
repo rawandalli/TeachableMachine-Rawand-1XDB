@@ -28,3 +28,100 @@ html, body {
   font-family: 'Orbitron', monospace;
   overflow-x: hidden;
 }
+
+
+.screen {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ══════════════════════════════════════
+   START SCREEN
+══════════════════════════════════════ */
+.start-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  max-width: 640px;
+  width: 90%;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.game-title {
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: 8px;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(255, 85, 0, 0.5);
+}
+
+.title-divider {
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--orange), transparent);
+  border-radius: 2px;
+  margin-top: -8px;
+}
+
+.game-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.4px;
+  line-height: 1.7;
+}
+
+.game-subtitle strong {
+  color: var(--orange);
+}
+
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  transition: border-color 0.2s;
+}
+
+.step-card:hover {
+  border-color: #3A4560;
+}
+
+.step-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.step-card p {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-family: 'Space Mono', monospace;
+  line-height: 1.65;
+}
