@@ -280,3 +280,22 @@ function updateBall() {
     updateHUD();
   }
 
+ // AI (rechts)
+  if (
+    ballVX > 0 &&
+    ballX + BALL_R >= AI_X &&
+    ballX + BALL_R <= AI_X + PADDLE_W + 2 &&
+    ballY + BALL_R >= aiY &&
+    ballY - BALL_R <= aiY + PADDLE_H
+  ) {
+    ballX = AI_X - BALL_R;
+    // Stuur bal naar willekeurige hoogte links
+    const targetY = rand(60, CH - 60);
+    const dx   = -Math.abs(AI_X - PLAYER_X);
+    const dy   = targetY - ballY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const spd  = clamp(mag(ballVX, ballVY) + 0.3, BALL_SPEED_0, BALL_SPEED_MAX);
+    ballVX = spd * (dx / dist);
+    ballVY = spd * (dy / dist);
+    aiTargetY = CH / 2;
+  }
