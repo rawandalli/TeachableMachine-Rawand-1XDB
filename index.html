@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PONG — Hand Tracking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── STARTSCHERM ── -->
+  <div id="start-screen" class="screen active">
+    <div class="start-content">
+      <h1 class="game-title">PONG</h1>
+      <div class="title-divider"></div>
+      <p class="game-subtitle">
+        Beweeg je hand <strong>omhoog</strong> of <strong>omlaag</strong> voor de camera<br>
+        om het balkje te besturen en de bal terug te slaan!
+      </p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-label">STAP 1</span>
+          <p>Sta voor de camera met je handpalm richting de lens.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-label">STAP 2</span>
+          <p>Beweeg je hand OMHOOG of OMLAAG om het oranje balkje te besturen.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-label">STAP 3</span>
+          <p>Sla de bal terug! De AI stuurt hem willekeurig naar de linkerkant.</p>
+        </div>
+      </div>
+
+      <button class="btn-orange" id="start-btn">&#9654;&nbsp; STARTEN</button>
+
+      <!-- Scoreboard overzicht -->
+      <div id="scoreboard-preview" class="scoreboard-preview"></div>
+    </div>
+  </div>
+
+  <!-- ── SPELSCHERM ── -->
+  <div id="game-screen" class="screen">
+
+    <!-- HUD bovenaan -->
+    <div class="game-hud">
+      <div class="hud-badge" id="timer-badge">Timer: 2:00</div>
+
+      <div class="hud-score">
+        <span class="score-label">SPELER</span>
+        <span class="score-num" id="player-score">00</span>
+        <span class="score-sep">—</span>
+        <span class="score-num" id="ai-score">00</span>
+        <span class="score-label">AI</span>
+      </div>
+
+      <div class="hud-badge">&#127942;&nbsp;Best Score:&nbsp;<span id="best-score-hud">0</span></div>
+    </div>
+
+    <!-- TM-statusbalk -->
+    <div class="tm-status-bar">
+      <span id="tm-status">Model laden…</span>
+      <span class="control-badge mouse" id="control-badge">&#9679;&nbsp;Muis</span>
+    </div>
+
+    <!-- Canvas + webcam -->
+    <div class="canvas-wrapper">
+      <canvas id="game-canvas" width="800" height="500"></canvas>
+
+      <!-- Webcam overlay linksonder -->
+      <div class="webcam-overlay">
+        <div class="webcam-label-bar">TEACHABLE MACHINE</div>
+        <div id="webcam-container">
+          <div class="webcam-placeholder" id="cam-placeholder">&#128247;</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── EINDSCHERM ── -->
+  <div id="end-screen" class="screen">
+    <div class="end-content">
+      <div class="time-up-pill">TIJD OP!</div>
+      <h2 class="result-title" id="result-title">GEWONNEN!</h2>
+      <div class="eindstand-label">EINDSTAND</div>
+      <div class="final-score-box">
+        <span id="final-player-score" style="color: var(--orange)">0</span>
+        <span class="final-divider">—</span>
+        <span id="final-ai-score" style="color: var(--yellow)">0</span>
+      </div>
+      <div class="final-labels">
+        <span>SPELER</span>
+        <span>AI</span>
+      </div>
+      <div class="best-pill">&#127942;&nbsp;Beste score:&nbsp;<span id="end-best-score">0</span></div>
+      <div class="end-buttons">
+        <button class="btn-orange" id="retry-btn">&#8635;&nbsp;OPNIEUW</button>
+        <button class="btn-dark" id="menu-btn">&#8962;&nbsp;MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TensorFlow.js + Teachable Machine Pose bibliotheek -->
+  <!-- Versies gepind: tfjs@1.3.1 is de versie waarvoor tmPose@0.8 gebouwd is -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+
+  <!-- Game logica -->
+  <script src="game.js"></script>
+</body>
+</html>
