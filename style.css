@@ -268,3 +268,113 @@ html, body {
   color: #3A4560;
   margin: 0 2px;
 }
+
+
+.canvas-wrapper {
+  position: relative;
+  border: 2px solid #1E2A40;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px #131C2C,
+    0 8px 48px rgba(0, 0, 0, 0.7),
+    inset 0 0 40px rgba(0, 0, 0, 0.3);
+  line-height: 0;
+}
+
+#game-canvas {
+  display: block;
+  width: min(800px, 95vw);
+  height: auto;
+  aspect-ratio: 800 / 500;
+  cursor: none;
+}
+
+
+.webcam-overlay {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  width: 132px;
+  border: 2px solid var(--orange);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 16px rgba(255, 85, 0, 0.45);
+}
+
+.webcam-label-bar {
+  background: rgba(0, 0, 0, 0.82);
+  color: var(--orange);
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+}
+
+#webcam-container {
+  width: 100%;
+  height: 90px;
+  overflow: hidden;
+  position: relative;
+  background: #080b10;
+}
+
+#webcam-container canvas,
+#webcam-container video {
+  display: block;
+  width: 100% !important;
+  height: 90px !important;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.webcam-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90px;
+  background: #0A0D12;
+  color: var(--text-dim);
+  font-size: 1.8rem;
+}
+
+
+.tm-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(820px, 95vw);
+  padding: 0 2px;
+}
+
+#tm-status {
+  font-size: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  color: var(--text-dim);
+  letter-spacing: 0.4px;
+}
+
+.control-badge {
+  font-size: 0.62rem;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.control-badge.mouse {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+}
+
+.control-badge.tm {
+  background: rgba(0, 255, 163, 0.12);
+  border: 1px solid rgba(0, 255, 163, 0.35);
+  color: var(--green);
+}
