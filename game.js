@@ -209,3 +209,17 @@ function endGame() {
 
   showScreen('end-screen');
 }
+
+// ════════════════════════════════════════
+//  BALL
+// ════════════════════════════════════════
+function resetBall(towardPlayer) {
+  ballX = CW / 2;
+  ballY = CH / 2;
+
+  // Kleine willekeurige hoek
+  const angle = (Math.random() * 0.4 - 0.2) * Math.PI;
+  const dir   = towardPlayer ? -1 : 1;
+  ballVX = dir * BALL_SPEED_0 * Math.cos(angle);
+  ballVY = BALL_SPEED_0 * Math.sin(angle);
+}
