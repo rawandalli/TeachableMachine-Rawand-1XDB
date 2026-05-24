@@ -400,3 +400,52 @@ function updateTimerDisplay() {
   const s = timeLeft % 60;
   elTimer.textContent = `Timer: ${m}:${pad(s)}`;
 }
+
+// ════════════════════════════════════════
+//  LOCALSTORAGE SCOREBOARD
+// ════════════════════════════════════════
+function saveEntry(pScore, aScore) {
+  const board = getBoard();
+  board.push({
+    date:   new Date().toLocaleDateString('nl-BE'),
+    player: pScore,
+    ai:     aScore,
+    result: pScore > aScore ? 'W' : pScore < aScore ? 'L' : 'D'
+  });
+  board.sort((a, b) => b.player - a.player);
+  board.splice(10);
+  localStorage.setItem('pong_scoreboard', JSON.stringify(board));
+}
+
+function getBoard() {
+  try { return JSON.parse(localStorage.getItem('pong_scoreboard') || '[]'); }
+  catch (_) { return []; }
+}
+
+function renderScoreboard() {
+  const container = document.getElementById('scoreboard-preview');
+  if (!container) return;
+  const board = getBoard();
+  if (!board.length) { container.innerHTML = ''; return; }
+
+  let html = `
+    <table>
+      <thead><tr>
+        <th>#</th><th>Datum</th><th>Speler</th><th>AI</th><th>Uitslag</th>
+      </tr></thead>
+      <tbody>
+  `;
+  board.forEach((e, i) => {
+    const cls = e.result === 'W' ? 'result-w' : e.result === 'L' ? 'result-l' : 'result-d';
+    const lbl = e.result === 'W' ? 'GEWONNEN' : e.result === 'L' ? 'VERLOREN' : 'GELIJK';
+    html += `<tr>
+      <td>${i + 1}</td>
+      <td>${e.date}</td>
+      <td>${pad(e.player)}</td>
+      <td>${pad(e.ai)}</td>
+      <td class="${cls}">${lbl}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
