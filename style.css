@@ -1,0 +1,30 @@
+/* ── Reset & base ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg:         #0C0F1A;
+  --surface:    #141B2D;
+  --border:     #252D3A;
+  --orange:     #FF5500;
+  --orange-h:   #FF6A20;
+  --yellow:     #FFCC00;
+  --green:      #00FFA3;
+  --red:        #FF3C5F;
+  --white:      #FFFFFF;
+  --text-dim:   #6B7A8D;
+  --text-mid:   #99AABB;
+  --hud-bg:     #111827;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--white);
+  font-family: 'Orbitron', monospace;
+  overflow-x: hidden;
+}
