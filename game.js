@@ -223,3 +223,41 @@ function resetBall(towardPlayer) {
   ballVX = dir * BALL_SPEED_0 * Math.cos(angle);
   ballVY = BALL_SPEED_0 * Math.sin(angle);
 }
+
+
+function updatePlayer() {
+  if (usingTM && tmHandY >= 0) {
+    // Paddle-midden volgt direct de handpositie
+    // Kleine smoothing (lerp 0.25) zodat de beweging vloeiend is maar stopt als de hand stil staat
+    const target = clamp(tmHandY - PADDLE_H / 2, 0, CH - PADDLE_H);
+    playerY += (target - playerY) * 0.25;
+  } else if (!usingTM) {
+    playerY = mouseY - PADDLE_H / 2;
+    playerY = clamp(playerY, 0, CH - PADDLE_H);
+  }
+}
+
+// AI volgt de bal perfect maar stuurt terug naar willekeurige Y
+let aiTargetY = CH / 2;
+
+function updateAI() {
+  // Zoek nieuwe target zodra bal naar AI beweegt
+  if (ballVX > 0 && ballX > CW / 2) {
+    const randomTarget = rand(50, CH - 50);
+    aiTargetY = randomTarget - PADDLE_H / 2;
+  }
+
+  const center = aiY + PADDLE_H / 2;
+  const diff   = (aiTargetY + PADDLE_H / 2) - center;
+  const step   = clamp(Math.abs(diff), 0, 5);
+  aiY += Math.sign(diff) * step;
+  aiY  = clamp(aiY, 0, CH - PADDLE_H);
+}
+
+function updateBall() {
+  ballX += ballVX;
+  ballY += ballVY;
+
+  // Muur boven/onder
+  if (ballY - BALL_R <= 0)  { ballY = BALL_R;       ballVY =  Math.abs(ballVY); }
+  if (ballY + BALL_R >= CH) { ballY = CH - BALL_R;  ballVY = -Math.abs(ballVY); }
