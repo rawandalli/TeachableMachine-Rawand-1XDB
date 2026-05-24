@@ -388,3 +388,15 @@ function gameLoop() {
   draw();
   rafID = requestAnimationFrame(gameLoop);
 }
+
+function updateHUD() {
+  elPlayerScore.textContent = pad(playerScore);
+  elAiScore.textContent     = pad(aiScore);
+  elBestHud.textContent     = bestScore;
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  elTimer.textContent = `Timer: ${m}:${pad(s)}`;
+}
