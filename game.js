@@ -377,3 +377,14 @@ function roundRect(c, x, y, w, h, r) {
   c.closePath();
 }
 
+// ════════════════════════════════════════
+//  GAME LOOP
+// ════════════════════════════════════════
+function gameLoop() {
+  if (!gameRunning) return;
+  updatePlayer();
+  updateAI();
+  updateBall();
+  draw();
+  rafID = requestAnimationFrame(gameLoop);
+}
