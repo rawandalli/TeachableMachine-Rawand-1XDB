@@ -106,7 +106,7 @@ async function startWebcam() {
   await tmWebcam.setup();
   await tmWebcam.play();
 
-  // Voeg de canvas van de webcam toe aan de overlay
+  
   const container   = document.getElementById('webcam-container');
   const placeholder = document.getElementById('cam-placeholder');
   placeholder.style.display = 'none';
@@ -261,3 +261,22 @@ function updateBall() {
   // Muur boven/onder
   if (ballY - BALL_R <= 0)  { ballY = BALL_R;       ballVY =  Math.abs(ballVY); }
   if (ballY + BALL_R >= CH) { ballY = CH - BALL_R;  ballVY = -Math.abs(ballVY); }
+
+   // Speler (links)
+  if (
+    ballVX < 0 &&
+    ballX - BALL_R <= PLAYER_X + PADDLE_W &&
+    ballX - BALL_R >= PLAYER_X - 2 &&
+    ballY + BALL_R >= playerY &&
+    ballY - BALL_R <= playerY + PADDLE_H
+  ) {
+    ballX = PLAYER_X + PADDLE_W + BALL_R;
+    const rel   = (ballY - playerY) / PADDLE_H - 0.5; // -0.5 .. 0.5
+    const angle = rel * Math.PI * 0.65;
+    const spd   = clamp(mag(ballVX, ballVY) + 0.4, BALL_SPEED_0, BALL_SPEED_MAX);
+    ballVX =  spd * Math.cos(angle);
+    ballVY =  spd * Math.sin(angle);
+    playerScore++;
+    updateHUD();
+  }
+
