@@ -378,3 +378,97 @@ html, body {
   border: 1px solid rgba(0, 255, 163, 0.35);
   color: var(--green);
 }
+
+/* ══════════════════════════════════════
+   END SCREEN
+══════════════════════════════════════ */
+.end-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.time-up-pill {
+  background: var(--orange);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  padding: 6px 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 14px rgba(255, 85, 0, 0.4);
+}
+
+.result-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 3px;
+  line-height: 1.1;
+}
+
+.result-title.won  { color: var(--green);  text-shadow: 0 0 30px rgba(0,255,163,0.5); }
+.result-title.lost { color: var(--red);    text-shadow: 0 0 30px rgba(255,60,95,0.5); }
+.result-title.draw { color: var(--yellow); text-shadow: 0 0 30px rgba(255,204,0,0.5); }
+
+.eindstand-label {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 4px;
+  font-weight: 700;
+  margin-bottom: -6px;
+}
+
+.final-score-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 52px;
+  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.final-divider {
+  color: #3A4560;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.final-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 210px;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin-top: -8px;
+  padding: 0 8px;
+}
+
+.best-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  font-size: 0.72rem;
+  font-family: 'Space Mono', monospace;
+  padding: 8px 20px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+
+.end-buttons {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
