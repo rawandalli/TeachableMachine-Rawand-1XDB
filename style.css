@@ -211,3 +211,60 @@ html, body {
   transform: translateY(0);
 }
 
+/* ══════════════════════════════════════
+   GAME SCREEN
+══════════════════════════════════════ */
+#game-screen {
+  gap: 10px;
+  padding: 20px 16px;
+}
+
+
+.game-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(820px, 95vw);
+}
+
+.hud-badge {
+  background: var(--hud-bg);
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  font-size: 0.7rem;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.5px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.hud-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-label {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 2.5px;
+  font-weight: 700;
+}
+
+.score-num {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: 3px;
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-sep {
+  font-size: 1.4rem;
+  color: #3A4560;
+  margin: 0 2px;
+}
