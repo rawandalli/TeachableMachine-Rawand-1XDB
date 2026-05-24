@@ -299,3 +299,16 @@ function updateBall() {
     ballVY = spd * (dy / dist);
     aiTargetY = CH / 2;
   }
+
+   
+  if (ballX + BALL_R < 0) {
+    aiScore++;
+    updateHUD();
+    resetBall(false);  
+  }
+
+ 
+  if (ballX - BALL_R > CW) {
+    resetBall(true);
+  }
+}
